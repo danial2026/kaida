@@ -249,12 +249,13 @@ export function loseHeart() {
       if (!cat) return;
 
       // Provide brief invincibility after hit
+      // TODO: increase to 1.5 seconds when we want to add invincibility
       cat.material.opacity = 0.5;
       cat.isInvincible = true;
       setTimeout(() => {
         cat.material.opacity = 1.0;
         cat.isInvincible = false;
-      }, 1500); // 1.5 seconds of invincibility
+      }, 500);
     }
   }
 }
