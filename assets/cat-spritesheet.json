@@ -1,0 +1,21 @@
+{
+  "frames": [
+    { "x": 0, "y": 0, "width": 120, "height": 70 },
+    { "x": 120, "y": 0, "width": 120, "height": 70 },
+    { "x": 240, "y": 0, "width": 120, "height": 70 },
+    { "x": 360, "y": 0, "width": 120, "height": 70 },
+    { "x": 0, "y": 70, "width": 120, "height": 70 },
+    { "x": 120, "y": 70, "width": 120, "height": 70 },
+    { "x": 240, "y": 70, "width": 120, "height": 70 },
+    { "x": 360, "y": 70, "width": 120, "height": 70 },
+    { "x": 0, "y": 140, "width": 120, "height": 70 },
+    { "x": 120, "y": 140, "width": 120, "height": 70 },
+    { "x": 240, "y": 140, "width": 120, "height": 70 },
+    { "x": 360, "y": 140, "width": 120, "height": 70 },
+    { "x": 0, "y": 210, "width": 120, "height": 70 }
+  ],
+  "animations": {
+    "run": [0, 1, 2, 3, 4, 5, 6, 7],
+    "jump": [8, 9, 10, 11, 12]
+  }
+}

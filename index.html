@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Kaida - The Flappy Cat Adventure</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #1a1a2e;
+        color: #ffffff;
+        font-family: "Arial", sans-serif;
+        transition: filter 0.3s ease-out;
+        touch-action: none; /* Prevent browser handling of all touch events */
+      }
+
+      body.grayscale {
+        filter: grayscale(100%);
+      }
+
+      body.damage-flash {
+        animation: flash 0.2s ease-out;
+      }
+
+      body.paused {
+        filter: blur(3px) brightness(0.7);
+      }
+
+      body.game-over {
+        filter: blur(2px) brightness(0.8);
+      }
+
+      @keyframes flash {
+        0% {
+          filter: brightness(1);
+        }
+        50% {
+          filter: brightness(1.5) saturate(2);
+        }
+        100% {
+          filter: brightness(1);
+        }
+      }
+
+      #score {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+        color: #ff9e00;
+        z-index: 100;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      #high-score {
+        position: absolute;
+        top: 50px;
+        left: 20px;
+        font-size: 20px;
+        color: #ff9e00;
+        z-index: 100;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Common UI Screen Styles */
+      .game-ui-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(26, 26, 46, 0.85);
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .game-title {
+        font-size: 48px;
+        margin-bottom: 30px;
+        color: #ff9e00;
+        text-shadow: 0 0 10px rgba(255, 158, 0, 0.5);
+      }
+
+      .game-subtitle {
+        font-size: 28px;
+        margin-bottom: 40px;
+        color: #ff5e78;
+      }
+
+      .game-button {
+        padding: 15px 30px;
+        font-size: 20px;
+        background-color: #4c956c;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        margin: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+      }
+
+      .game-button:hover,
+      .game-button:active {
+        background-color: #2c6e49;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .game-instructions {
+        margin-top: 30px;
+        font-size: 18px;
+        color: #d4d4ff;
+        max-width: 600px;
+      }
+
+      /* Start Screen */
+      #start-screen {
+        display: flex;
+      }
+
+      /* Pause Screen */
+      #pause-screen {
+        display: none;
+      }
+
+      /* Game Over Screen */
+      #game-over {
+        display: none;
+      }
+
+      /* Hearts container */
+      #hearts-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        gap: 8px;
+        z-index: 100;
+      }
+
+      .heart {
+        width: 30px;
+        height: 30px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff5e78'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: opacity 0.3s ease;
+      }
+
+      .heart.lost {
+        opacity: 0.2;
+      }
+
+      /* Mobile-specific styles */
+      @media (max-width: 768px) {
+        .game-title {
+          font-size: 36px;
+          margin-bottom: 20px;
+        }
+
+        .game-subtitle {
+          font-size: 22px;
+          margin-bottom: 30px;
+        }
+
+        .game-button {
+          padding: 18px 36px; /* Larger touch target */
+          font-size: 22px;
+          margin: 15px;
+        }
+
+        .game-instructions {
+          font-size: 16px;
+        }
+
+        #score,
+        #high-score {
+          font-size: 18px;
+        }
+
+        #hearts-container {
+          gap: 6px;
+        }
+
+        .heart {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="score">Score: 0</div>
+    <div id="high-score">High Score: 0</div>
+    <div id="hearts-container">
+      <div id="heart-1" class="heart"></div>
+      <div id="heart-2" class="heart"></div>
+      <div id="heart-3" class="heart"></div>
+      <div id="heart-4" class="heart"></div>
+      <div id="heart-5" class="heart"></div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="game-ui-screen">
+      <h1 class="game-title">Kaida</h1>
+      <h2 class="game-subtitle">A Feline Flapping Adventure</h2>
+      <button id="start-btn" class="game-button">Start Game</button>
+      <div class="game-instructions">
+        <p>Move your mouse or touch the screen to control Kaida. 🐱</p>
+        <p>Avoid the pipes and collect points! 🏆</p>
+        <p>Press ESC or tap the pause button to pause the game. ⏸️</p>
+      </div>
+    </div>
+
+    <!-- Pause Screen -->
+    <div id="pause-screen" class="game-ui-screen">
+      <h1 class="game-title">Game Paused</h1>
+      <button id="resume-btn" class="game-button">Resume Game</button>
+      <div class="game-instructions">
+        <p>Click or tap the Resume Button to continue.</p>
+      </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over" class="game-ui-screen">
+      <h1 class="game-title">Game Over</h1>
+      <h2 class="game-subtitle">Your Score: <span id="final-score">0</span></h2>
+      <button id="try-again" class="game-button">Try Again</button>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
