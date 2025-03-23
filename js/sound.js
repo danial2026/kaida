@@ -2,13 +2,13 @@
 export function loadSounds() {
   // Death sound (cat meow) that plays when the cat collides with obstacles
   window.deathSound = new Audio(
-    "assets/sounds/530341__wesleyextreme_gamer__cat-meow.wav"
+    "sounds/530341__wesleyextreme_gamer__cat-meow.wav"
   );
   window.deathSound.load();
 
   // Heart loss sound - using the same cat meow sound
   window.heartLossSound = new Audio(
-    "assets/sounds/362953__jofae__cat-call-meow.mp3"
+    "sounds/362953__jofae__cat-call-meow.mp3"
   );
   window.heartLossSound.load();
 }

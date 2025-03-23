@@ -1,6 +1,6 @@
 export default {
   root: "./",
-  publicDir: "assets",
+  publicDir: "public",
   build: {
     outDir: "dist",
     emptyOutDir: true,

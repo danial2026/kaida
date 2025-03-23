@@ -36,8 +36,8 @@ export function createCat(scene, onLoaded) {
   // Load cat spritesheet
   const textureLoader = new THREE.TextureLoader();
   textureLoader.load(
-    // This is the cat (Kaida) spritesheet image containing all animation frames
-    "assets/images/oie_WgXXG0sGnbpa-2.png",
+    // Use the path relative to public directory
+    "/images/oie_WgXXG0sGnbpa-2.png",
     (texture) => {
       catSpritesheetTexture = texture;
 
