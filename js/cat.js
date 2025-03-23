@@ -2,12 +2,34 @@ import * as THREE from "three";
 
 // Cat variables
 let cat;
-let catSpritesheet;
 let catSpritesheetTexture;
 let currentFrame = 0;
 let frameTime = 0;
 let animationSpeed = 0.1;
 let catAnimationState = "run";
+
+// Cat animation data
+const catSpritesheet = {
+  frames: [
+    { x: 0, y: 0, width: 120, height: 70 },
+    { x: 120, y: 0, width: 120, height: 70 },
+    { x: 240, y: 0, width: 120, height: 70 },
+    { x: 360, y: 0, width: 120, height: 70 },
+    { x: 0, y: 70, width: 120, height: 70 },
+    { x: 120, y: 70, width: 120, height: 70 },
+    { x: 240, y: 70, width: 120, height: 70 },
+    { x: 360, y: 70, width: 120, height: 70 },
+    { x: 0, y: 140, width: 120, height: 70 },
+    { x: 120, y: 140, width: 120, height: 70 },
+    { x: 240, y: 140, width: 120, height: 70 },
+    { x: 360, y: 140, width: 120, height: 70 },
+    { x: 0, y: 210, width: 120, height: 70 },
+  ],
+  animations: {
+    run: [0, 1, 2, 3, 4, 5, 6, 7],
+    jump: [8, 9, 10, 11, 12],
+  },
+};
 
 // Create cat character
 export function createCat(scene, onLoaded) {
@@ -19,23 +41,13 @@ export function createCat(scene, onLoaded) {
     (texture) => {
       catSpritesheetTexture = texture;
 
-      // Load cat animation data
-      fetch("assets/cat-spritesheet.json")
-        .then((response) => response.json())
-        .then((data) => {
-          catSpritesheet = data;
+      // Create the cat and start animation
+      createCatMesh(scene);
 
-          // Now create the cat and start animation
-          createCatMesh(scene);
-
-          // Call onLoaded callback if provided
-          if (onLoaded && typeof onLoaded === "function") {
-            onLoaded();
-          }
-        })
-        .catch((error) => {
-          console.error("Error loading cat animation data:", error);
-        });
+      // Call onLoaded callback if provided
+      if (onLoaded && typeof onLoaded === "function") {
+        onLoaded();
+      }
     }
   );
 }
