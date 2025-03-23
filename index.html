@@ -201,6 +201,40 @@
           height: 24px;
         }
       }
+
+      .footer-links {
+        position: fixed;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        color: #d4d4ff;
+        opacity: 0.8;
+        z-index: 1001;
+      }
+
+      .footer-links a {
+        color: #ff9e00;
+        text-decoration: none;
+        margin: 0 10px;
+        transition: color 0.2s ease;
+      }
+
+      .footer-links a:hover {
+        color: #ffbb52;
+        text-decoration: underline;
+      }
+
+      .separator {
+        color: #d4d4ff;
+      }
+
+      @media (max-width: 768px) {
+        .footer-links {
+          font-size: 14px;
+          bottom: 15px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -212,6 +246,20 @@
       <div id="heart-3" class="heart"></div>
       <div id="heart-4" class="heart"></div>
       <div id="heart-5" class="heart"></div>
+    </div>
+
+    <!-- Footer Links (single instance for all screens) -->
+    <div class="footer-links">
+      <a
+        href="https://github.com/danial2026/kaida"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Source Code</a
+      >
+      <span class="separator">|</span>
+      <a href="https://danials.space" target="_blank" rel="noopener noreferrer"
+        >Developer</a
+      >
     </div>
 
     <!-- Start Screen -->

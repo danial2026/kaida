@@ -2,6 +2,12 @@
 
 A fun and addictive 2D game inspired by Flappy Bird, featuring Kaida the cat as the main character. Navigate through obstacles, collect points, and try to achieve the highest score!
 
+## 🔗 Links
+
+- **Live Game**: [kaida.danials.space](https://kaida.danials.space/)
+- **Source Code**: [github.com/danial2026/kaida](https://github.com/danial2026/kaida)
+- **Developer**: [danials.space](https://danials.space)
+
 ## ✨ Features
 
 - **Responsive Design**: Play on both desktop and mobile devices
@@ -35,7 +41,7 @@ A fun and addictive 2D game inspired by Flappy Bird, featuring Kaida the cat as 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/kaida-game.git
+   git clone https://github.com/danial2026/kaida.git
    cd kaida-game
    ```
 
